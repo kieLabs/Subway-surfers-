@@ -6,52 +6,53 @@
 <title>Subway Surfers – GamerKie Edition</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
-  html, body { width: 100%; height: 100%; overflow: hidden; background: #09131e; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; touch-action: none; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #07131f; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; touch-action: none; }
   #game-canvas { display: block; width: 100%; height: 100%; }
 
   /* HUD */
   #hud {
-    position: fixed; top: 0; left: 0; width: 100%; padding: 14px 18px;
+    position: fixed; top: 0; left: 0; width: 100%; padding: 14px 16px;
     display: flex; justify-content: space-between; align-items: flex-start;
     pointer-events: none; z-index: 10;
   }
   .hud-group { display: flex; flex-direction: column; gap: 8px; }
   .pill {
-    background: rgba(10, 20, 35, 0.78); border: 2px solid rgba(255,255,255,0.2);
+    background: rgba(8, 19, 33, 0.82); border: 2px solid rgba(255,255,255,0.22);
     backdrop-filter: blur(6px); border-radius: 999px; padding: 6px 16px;
-    color: #fff; font-weight: 800; font-size: 16px; letter-spacing: 0.5px;
-    display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+    color: #fff; font-weight: 800; font-size: 16px; letter-spacing: 0.4px;
+    display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(0,0,0,0.45);
   }
-  .pill.gold { border-color: #ffd000; color: #ffe566; }
-  .pill.mult { border-color: #00e5ff; color: #7ff4ff; font-size: 14px; }
-  #btn-pause, #btn-fs {
-    pointer-events: auto; cursor: pointer; background: rgba(10, 20, 35, 0.85);
+  .pill.gold { border-color: #ffd000; color: #ffe66d; }
+  .pill.mult { border-color: #00e5ff; color: #7cf4ff; font-size: 14px; }
+  .top-btns { display: flex; gap: 8px; pointer-events: auto; }
+  .icon-btn {
+    cursor: pointer; background: rgba(8, 19, 33, 0.88);
     border: 2px solid #00e5ff; color: #fff; border-radius: 12px;
     width: 42px; height: 42px; font-size: 18px; font-weight: 900;
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.45);
   }
-  #btn-pause:active, #btn-fs:active { transform: scale(0.92); }
-  .top-btns { display: flex; gap: 8px; pointer-events: auto; }
+  .icon-btn.gold-b { border-color: #ffd000; }
+  .icon-btn:active { transform: scale(0.92); }
 
-  /* Active Powerups Bar */
+  /* Active Powerups */
   #powerup-bars {
-    position: fixed; left: 16px; bottom: 86px; display: flex; flex-direction: column; gap: 8px;
+    position: fixed; left: 16px; bottom: 88px; display: flex; flex-direction: column; gap: 8px;
     z-index: 10; pointer-events: none;
   }
   .pu-item {
-    background: rgba(10,20,35,0.85); border: 1.5px solid #ffd000; border-radius: 10px;
-    padding: 5px 10px; color: #fff; font-size: 12px; font-weight: 700; width: 155px;
+    background: rgba(8, 19, 33, 0.88); border: 1.5px solid #ffd000; border-radius: 10px;
+    padding: 6px 10px; color: #fff; font-size: 12px; font-weight: 700; width: 162px;
   }
   .pu-track { width: 100%; height: 6px; background: rgba(255,255,255,0.18); border-radius: 4px; margin-top: 4px; overflow: hidden; }
   .pu-fill { height: 100%; background: linear-gradient(90deg, #00e5ff, #ffd000); width: 100%; }
 
-  /* Hoverboard Quick Button */
+  /* Hoverboard Button */
   #btn-board {
     position: fixed; right: 18px; bottom: 22px; z-index: 12;
     background: linear-gradient(135deg, #00e5ff, #0088ff);
-    border: 3px solid #fff; border-radius: 50%; width: 64px; height: 64px;
-    color: #061424; font-weight: 900; font-size: 11px; text-align: center;
+    border: 3px solid #fff; border-radius: 50%; width: 66px; height: 66px;
+    color: #051322; font-weight: 900; font-size: 12px; text-align: center;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     box-shadow: 0 6px 20px rgba(0,229,255,0.55); cursor: pointer;
   }
@@ -59,15 +60,15 @@
 
   /* Overlays */
   .overlay {
-    position: fixed; inset: 0; background: radial-gradient(circle at center, rgba(14,30,52,0.88), rgba(6,12,22,0.96));
+    position: fixed; inset: 0; background: radial-gradient(circle at center, rgba(13,31,54,0.90), rgba(5,12,22,0.97));
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     z-index: 30; padding: 20px; text-align: center; color: #fff;
   }
   .hidden { display: none !important; }
   .brand-badge {
-    background: linear-gradient(90deg, #ff6a00, #ffd000); color: #111;
+    background: linear-gradient(90deg, #58f52e, #00e5ff); color: #061420;
     font-weight: 900; font-size: 12px; padding: 4px 14px; border-radius: 999px;
-    letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px;
+    letter-spacing: 1.4px; text-transform: uppercase; margin-bottom: 10px;
   }
   h1.title {
     font-size: clamp(32px, 6vw, 56px); font-weight: 900; line-height: 1.05;
@@ -88,30 +89,30 @@
   .stat-label { font-size: 11px; color: #9ec5e8; text-transform: uppercase; }
   .stat-val { font-size: 20px; font-weight: 900; color: #ffd000; margin-top: 2px; }
   .btn-main {
-    background: linear-gradient(180deg, #38ef7d, #11998e);
-    border: 3px solid #fff; color: #052216; font-weight: 900; font-size: 20px;
+    background: linear-gradient(180deg, #58f52e, #12b886);
+    border: 3px solid #fff; color: #041e14; font-weight: 900; font-size: 20px;
     padding: 14px 40px; border-radius: 999px; cursor: pointer;
-    box-shadow: 0 8px 25px rgba(17,153,142,0.55); letter-spacing: 1px;
+    box-shadow: 0 8px 25px rgba(18,184,134,0.5); letter-spacing: 1px;
     transition: transform 0.12s; margin: 6px;
   }
   .btn-main:hover { transform: scale(1.04); }
   .btn-main:active { transform: scale(0.96); }
   .btn-sec {
     background: linear-gradient(180deg, #ffd000, #ff8800);
-    border: 2px solid #fff; color: #1b1000; font-weight: 800; font-size: 15px;
-    padding: 10px 24px; border-radius: 999px; cursor: pointer; margin: 6px;
+    border: 2px solid #fff; color: #1b1000; font-weight: 800; font-size: 14px;
+    padding: 10px 22px; border-radius: 999px; cursor: pointer; margin: 6px;
   }
   .controls-hint {
     margin-top: 16px; font-size: 12px; color: #b7d4ee;
     background: rgba(255,255,255,0.06); padding: 8px 16px; border-radius: 10px;
   }
   #load-bar-wrap { width: 260px; height: 12px; background: rgba(255,255,255,0.15); border-radius: 99px; overflow: hidden; margin: 14px 0; border: 1px solid rgba(255,255,255,0.3); }
-  #load-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #00e5ff, #38ef7d); transition: width 0.15s; }
+  #load-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #00e5ff, #58f52e); transition: width 0.15s; }
   #toast {
     position: fixed; top: 76px; left: 50%; transform: translateX(-50%);
-    background: rgba(255, 208, 0, 0.95); color: #111; font-weight: 900;
+    background: rgba(255, 208, 0, 0.96); color: #111; font-weight: 900;
     padding: 6px 18px; border-radius: 999px; font-size: 14px; z-index: 25;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.4); opacity: 0; transition: opacity 0.25s; pointer-events: none;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.45); opacity: 0; transition: opacity 0.25s; pointer-events: none;
   }
 </style>
 </head>
@@ -129,24 +130,24 @@
     </div>
   </div>
   <div class="top-btns">
-    <button id="btn-mute" title="Toggle Audio" style="pointer-events:auto;cursor:pointer;background:rgba(10,20,35,0.85);border:2px solid #ffd000;color:#fff;border-radius:12px;width:42px;height:42px;font-size:18px;">🔊</button>
-    <button id="btn-fs" title="Fullscreen">⛶</button>
-    <button id="btn-pause" title="Pause">❚❚</button>
+    <button id="btn-mute" class="icon-btn gold-b" title="Toggle Audio">🔊</button>
+    <button id="btn-fs" class="icon-btn" title="Fullscreen">⛶</button>
+    <button id="btn-pause" class="icon-btn" title="Pause">❚❚</button>
   </div>
 </div>
 
 <div id="toast"></div>
 <div id="powerup-bars"></div>
-<button id="btn-board" class="hidden" title="Activate Hoverboard (Space / Double Tap)">🛹<span id="board-count">3</span></button>
+<button id="btn-board" class="hidden" title="CyberGlider Hoverboard (Space / Double Tap)">🛹<span id="board-count">3</span></button>
 
 <!-- START / LOADING OVERLAY -->
 <div id="start-screen" class="overlay">
-  <div class="brand-badge">GamerKie Edition • 3D GLB Engine</div>
+  <div class="brand-badge">GamerKie Edition • 14 GLB Models</div>
   <h1 class="title">Subway Surfers</h1>
-  <p class="subtitle">Dodge oncoming graffiti trains, collect gold coins, ride hoverboards & blast off with the Jetpack!</p>
+  <p class="subtitle">Ride CyberGlider, fly with Firehawk Jetpack, collect Gold Coins & dodge KIE SURF trains!</p>
 
   <div id="loading-box">
-    <div id="load-text" style="font-size:13px;color:#00e5ff;font-weight:700;">Loading 3D GLB Models... 0%</div>
+    <div id="load-text" style="font-size:13px;color:#00e5ff;font-weight:700;">Loading GamerKie 3D GLB Models... 0%</div>
     <div id="load-bar-wrap"><div id="load-bar"></div></div>
   </div>
 
@@ -154,18 +155,18 @@
     <div class="stats-grid">
       <div class="stat-card"><div class="stat-label">High Score</div><div class="stat-val" id="menu-best">0</div></div>
       <div class="stat-card"><div class="stat-label">Total Coins</div><div class="stat-val" id="menu-coins">0</div></div>
-      <div class="stat-card"><div class="stat-label">Hoverboards</div><div class="stat-val" id="menu-boards">3</div></div>
+      <div class="stat-card"><div class="stat-label">CyberGliders</div><div class="stat-val" id="menu-boards">3</div></div>
     </div>
     <div>
       <button id="btn-play" class="btn-main">▶ TAP TO RUN</button>
     </div>
     <div>
-      <button id="btn-buy-board" class="btn-sec">🛹 Buy Hoverboard (50 🪙)</button>
+      <button id="btn-buy-board" class="btn-sec">🛹 Buy CyberGlider (50 🪙)</button>
       <button id="btn-upgrade-mult" class="btn-sec">⚡ Upgrade Multiplier (<span id="mult-cost">100</span> 🪙)</button>
     </div>
     <div class="controls-hint">
-      📱 <b>Mobile:</b> Swipe Left / Right / Up / Down • Double Tap = Hoverboard<br/>
-      💻 <b>PC:</b> Arrow Keys or WASD • Spacebar = Hoverboard
+      📱 <b>Mobile:</b> Swipe Left / Right / Up / Down • Double Tap = CyberGlider<br/>
+      💻 <b>PC:</b> Arrow Keys or WASD • Spacebar = CyberGlider
     </div>
   </div>
 </div>
@@ -180,7 +181,7 @@
 
 <!-- GAME OVER OVERLAY -->
 <div id="gameover-screen" class="overlay hidden">
-  <div class="brand-badge">Busted by Inspector!</div>
+  <div class="brand-badge">Busted!</div>
   <h1 class="title" style="font-size:42px;">Game Over</h1>
   <div class="stats-grid">
     <div class="stat-card"><div class="stat-label">Score</div><div class="stat-val" id="go-score">0</div></div>
@@ -196,16 +197,13 @@
   </div>
 </div>
 
-<!-- Three.js & GLTFLoader via CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 
 <script>
 (() => {
-  // ==========================================
-  // 1. PERSISTENT SAVE DATA (localStorage)
-  // ==========================================
-  const SAVE_KEY = 'gamerkie_subway_surfers_v1';
+  // 1. PERSISTENT SAVE DATA
+  const SAVE_KEY = 'gamerkie_subway_surfers_glb_v2';
   let saveData = {
     highScore: 0,
     totalCoins: 150,
@@ -220,9 +218,7 @@
     try { localStorage.setItem(SAVE_KEY, JSON.stringify(saveData)); } catch (e) {}
   }
 
-  // ==========================================
-  // 2. PROCEDURAL WEB AUDIO ENGINE (SFX + BGM)
-  // ==========================================
+  // 2. WEB AUDIO ENGINE (SFX + BGM + LAUGH)
   class SoundEngine {
     constructor() {
       this.ctx = null;
@@ -266,7 +262,6 @@
       setTimeout(() => this.playTone(95, 'square', 0.3, 0.25, 40), 80);
     }
     laugh() {
-      // Inspector chuckle
       [340, 290, 330, 270, 310].forEach((f, i) => {
         setTimeout(() => this.playTone(f, 'sawtooth', 0.11, 0.14, f - 40), i * 120);
       });
@@ -289,9 +284,7 @@
   }
   const sfx = new SoundEngine();
 
-  // ==========================================
   // 3. THREE.JS SCENE & LIGHTING
-  // ==========================================
   const canvas = document.getElementById('game-canvas');
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -308,11 +301,10 @@
   camera.position.set(0, 5.2, 8.5);
   camera.lookAt(0, 1.6, -12);
 
-  // Lights
-  const hemiLight = new THREE.HemisphereLight(0xffffff, 0x3b4d61, 1.15);
+  const hemiLight = new THREE.HemisphereLight(0xffffff, 0x3b4d61, 1.2);
   scene.add(hemiLight);
 
-  const dirLight = new THREE.DirectionalLight(0xfff5e0, 1.1);
+  const dirLight = new THREE.DirectionalLight(0xfff5e0, 1.15);
   dirLight.position.set(14, 26, 18);
   dirLight.castShadow = true;
   dirLight.shadow.mapSize.set(1024, 1024);
@@ -325,24 +317,22 @@
   dirLight.shadow.camera.bottom = -d;
   scene.add(dirLight);
 
-  // ==========================================
-  // 4. LOAD ALL 14 GLB ASSETS
-  // ==========================================
+  // 4. LOAD ALL 14 GAMERKIE GLB MODELS FROM models/
   const loader = new THREE.GLTFLoader();
   const MODEL_FILES = {
-    coin: 'models/01_gold_coin.glb',
-    hoverboard: 'models/02_hoverboard.glb',
-    jetpack: 'models/03_jetpack.glb',
-    sneakers: 'models/04_super_sneakers.glb',
-    magnet: 'models/05_coin_magnet.glb',
-    mystery: 'models/06_mystery_box.glb',
-    cone: 'models/07_traffic_cone.glb',
-    barrier: 'models/08_railway_barrier.glb',
-    train: 'models/09_subway_train.glb',
-    track: 'models/10_railway_track.glb',
+    runner: 'models/01_runner_character_gamerkie.glb',
+    hoverboard: 'models/02_hoverboard_cyberglider.glb',
+    coin: 'models/03_gold_coin.glb',
+    jetpack: 'models/04_jetpack_firehawk.glb',
+    sneakers: 'models/05_super_sneakers.glb',
+    magnet: 'models/06_coin_magnet.glb',
+    mystery: 'models/07_mystery_box.glb',
+    cone: 'models/08_traffic_cone.glb',
+    barrier: 'models/09_railway_barrier.glb',
+    train: 'models/10_subway_train.glb',
     crate: 'models/11_wooden_crate.glb',
     boombox: 'models/12_boombox.glb',
-    runner: 'models/13_runner_character.glb',
+    track: 'models/13_railway_track.glb',
     spray: 'models/14_spray_paint_can.glb'
   };
 
@@ -391,7 +381,7 @@
 
   function updateLoadProgress() {
     const pct = Math.round((loadedCount / keys.length) * 100);
-    document.getElementById('load-text').textContent = `Loading 3D GLB Models... ${pct}%`;
+    document.getElementById('load-text').textContent = `Loading GamerKie 3D GLB Models... ${pct}%`;
     document.getElementById('load-bar').style.width = `${pct}%`;
   }
 
@@ -401,15 +391,12 @@
     return obj;
   }
 
-  // ==========================================
   // 5. ENVIRONMENT & 3-LANE TRACKS
-  // ==========================================
   const LANES = [-2.5, 0, 2.5];
   const trackSegments = [];
   const sideProps = [];
 
   function buildEnvironment() {
-    // Ground base
     const ground = new THREE.Mesh(
       new THREE.PlaneGeometry(60, 220),
       new THREE.MeshStandardMaterial({ color: 0x4b535e, roughness: 0.9 })
@@ -419,9 +406,8 @@
     ground.receiveShadow = true;
     scene.add(ground);
 
-    // Side Platforms / Walls
     const wallMat = new THREE.MeshStandardMaterial({ color: 0x8b6f56, roughness: 0.8 });
-    const trimMat = new THREE.MeshStandardMaterial({ color: 0xffd000, roughness: 0.4 });
+    const trimMat = new THREE.MeshStandardMaterial({ color: 0x58f52e, roughness: 0.4 });
     [-5.2, 5.2].forEach((wx) => {
       const wall = new THREE.Mesh(new THREE.BoxGeometry(2.6, 3.2, 220), wallMat);
       wall.position.set(wx, 1.5, -70);
@@ -433,7 +419,6 @@
       scene.add(trim);
     });
 
-    // Overhead Catenary Arches
     const archMat = new THREE.MeshStandardMaterial({ color: 0x263547, metalness: 0.5, roughness: 0.4 });
     for (let z = 10; z > -150; z -= 22) {
       const arch = new THREE.Group();
@@ -449,7 +434,6 @@
       sideProps.push(arch);
     }
 
-    // 3-Lane Repeating Track Segments (using 10_railway_track.glb)
     for (let z = 12; z > -150; z -= 3.0) {
       const row = new THREE.Group();
       LANES.forEach((lx) => {
@@ -457,7 +441,6 @@
         t.position.set(lx, 0, 0);
         row.add(t);
       });
-      // Decorative Crates, Boombox & Spray Cans on side platforms
       if (Math.abs(Math.round(z)) % 9 === 0) {
         const propKeys = ['crate', 'boombox', 'spray', 'cone'];
         const pLeft = cloneAsset(propKeys[Math.floor(Math.random() * propKeys.length)], 1.2);
@@ -474,9 +457,7 @@
     }
   }
 
-  // ==========================================
-  // 6. PLAYER & ATTACHED POWERUP VISUALS
-  // ==========================================
+  // 6. PLAYER & POWERUP VISUALS
   const playerGroup = new THREE.Group();
   scene.add(playerGroup);
 
@@ -502,11 +483,9 @@
     playerGroup.add(sneakersMesh);
   }
 
-  // ==========================================
-  // 7. GAMEPLAY STATE & ENTITIES
-  // ==========================================
-  let gameState = 'LOADING'; // LOADING, MENU, PLAYING, PAUSED, GAMEOVER
-  let currentLane = 1; // 0, 1, 2
+  // 7. GAMEPLAY STATE
+  let gameState = 'LOADING';
+  let currentLane = 1;
   let playerY = 0;
   let velY = 0;
   let isJumping = false;
@@ -520,7 +499,6 @@
   let spawnTimer = 0;
   let shakeTime = 0;
 
-  // Powerups (seconds remaining)
   const powerups = {
     hoverboard: 0,
     jetpack: 0,
@@ -570,12 +548,9 @@
     updateHUD();
   }
 
-  // ==========================================
-  // 8. SPAWNER (TRAINS, BARRIERS, CONES, COINS, POWERUPS)
-  // ==========================================
+  // 8. SPAWNER
   function spawnWave() {
     const zBase = -115;
-    // Pick 1 or 2 lanes for obstacles, always leave at least 1 clear or jumpable/rollable path
     const lanesOrder = [0, 1, 2].sort(() => Math.random() - 0.5);
     const obstacleCount = Math.random() < 0.55 ? 2 : 1;
 
@@ -585,7 +560,6 @@
       const r = Math.random();
 
       if (r < 0.48) {
-        // Subway Train (tall obstacle - must dodge or fly over with jetpack/sneakers)
         const train = cloneAsset('train', 1.25);
         train.position.set(lx, 0, zBase - 3);
         const moving = Math.random() < 0.45;
@@ -601,7 +575,6 @@
         });
         scene.add(train);
       } else if (r < 0.78) {
-        // Railway Barrier (can jump over OR roll under)
         const barrier = cloneAsset('barrier', 1.25);
         barrier.position.set(lx, 0, zBase);
         activeObstacles.push({
@@ -616,7 +589,6 @@
         });
         scene.add(barrier);
       } else {
-        // Traffic Cone + Wooden Crate combo
         const cone = cloneAsset('cone', 1.3);
         cone.position.set(lx, 0, zBase);
         activeObstacles.push({
@@ -633,7 +605,6 @@
       }
     }
 
-    // Free lane gets a trail of Gold Coins + occasional Power-up!
     const freeLane = lanesOrder[obstacleCount];
     const fx = LANES[freeLane];
     const coinCount = 5;
@@ -647,7 +618,6 @@
       scene.add(coin);
     }
 
-    // 32% chance to spawn a special Power-Up on the free lane
     if (Math.random() < 0.32) {
       const puTypes = ['jetpack', 'sneakers', 'magnet', 'mystery'];
       const chosen = puTypes[Math.floor(Math.random() * puTypes.length)];
@@ -658,9 +628,7 @@
     }
   }
 
-  // ==========================================
-  // 9. PLAYER ACTIONS & CONTROLS
-  // ==========================================
+  // 9. CONTROLS
   function moveLeft() {
     if (gameState !== 'PLAYING') return;
     if (currentLane > 0) {
@@ -690,7 +658,7 @@
     isRolling = true;
     rollTimer = 0.65;
     if (isJumping) {
-      velY = -22; // Fast slam down
+      velY = -22;
     }
     sfx.roll();
   }
@@ -698,7 +666,7 @@
     if (gameState !== 'PLAYING') return;
     if (powerups.hoverboard > 0) return;
     if (saveData.hoverboards <= 0) {
-      showToast('No Hoverboards left! Buy in Menu');
+      showToast('No CyberGliders left! Buy in Menu');
       return;
     }
     saveData.hoverboards--;
@@ -706,11 +674,10 @@
     powerups.hoverboard = 15;
     hoverboardMesh.visible = true;
     sfx.powerup();
-    showToast('🛹 HOVERBOARD ACTIVATED!');
+    showToast('🛹 CYBERGLIDER ACTIVATED!');
     updateHUD();
   }
 
-  // Keyboard
   window.addEventListener('keydown', (e) => {
     if (e.code === 'ArrowLeft' || e.code === 'KeyA') moveLeft();
     else if (e.code === 'ArrowRight' || e.code === 'KeyD') moveRight();
@@ -720,7 +687,6 @@
     else if (e.code === 'Escape' || e.code === 'KeyP') togglePause();
   });
 
-  // Touch Swipe + Double Tap
   let touchStartX = 0, touchStartY = 0, lastTapTime = 0;
   canvas.addEventListener('touchstart', (e) => {
     if (e.touches.length > 0) {
@@ -746,9 +712,7 @@
     }
   }, { passive: true });
 
-  // ==========================================
   // 10. UI & MENU BINDINGS
-  // ==========================================
   function getActiveMultiplier() {
     return saveData.baseMultiplier * (powerups.multiplier2x > 0 ? 2 : 1);
   }
@@ -764,12 +728,11 @@
     document.getElementById('menu-boards').textContent = saveData.hoverboards;
     document.getElementById('mult-cost').textContent = saveData.baseMultiplier * 100;
 
-    // Powerup progress bars
     const barWrap = document.getElementById('powerup-bars');
     barWrap.innerHTML = '';
     const labels = {
-      hoverboard: ['🛹 Hoverboard', 15],
-      jetpack: ['🚀 Jetpack', 10],
+      hoverboard: ['🛹 CyberGlider', 15],
+      jetpack: ['🚀 Firehawk Jetpack', 10],
       sneakers: ['👟 Super Sneakers', 12],
       magnet: ['🧲 Coin Magnet', 12],
       multiplier2x: ['⚡ 2x Multiplier', 15]
@@ -864,7 +827,7 @@
       persist();
       sfx.coin();
       updateHUD();
-      showToast('🛹 +1 Hoverboard Purchased!');
+      showToast('🛹 +1 CyberGlider Purchased!');
     } else {
       showToast('Need 50 Coins!');
     }
@@ -899,9 +862,7 @@
     }
   };
 
-  // ==========================================
   // 11. MAIN GAME LOOP
-  // ==========================================
   const clock = new THREE.Clock();
 
   function animate() {
@@ -909,7 +870,6 @@
     const dt = Math.min(clock.getDelta(), 0.05);
 
     if (gameState === 'MENU' || gameState === 'GAMEOVER') {
-      // Idle showcase camera & character bob
       runCycle += dt * 4;
       if (runnerMesh) {
         runnerMesh.position.y = Math.abs(Math.sin(runCycle)) * 0.12;
@@ -924,12 +884,10 @@
       return;
     }
 
-    // --- PLAYING UPDATE ---
     speed = Math.min(48, speed + dt * 0.42);
     const activeSpeed = powerups.jetpack > 0 ? speed * 1.45 : speed;
     score += activeSpeed * dt * 1.8 * getActiveMultiplier();
 
-    // Update Powerup Timers
     Object.keys(powerups).forEach((k) => {
       if (powerups[k] > 0) {
         powerups[k] = Math.max(0, powerups[k] - dt);
@@ -941,7 +899,6 @@
       }
     });
 
-    // Scroll Railway Tracks & Arches
     const moveDist = activeSpeed * dt;
     trackSegments.forEach((seg) => {
       seg.position.z += moveDist;
@@ -952,20 +909,18 @@
       if (arch.position.z > 15) arch.position.z -= 154;
     });
 
-    // Player Horizontal Lane Smoothing
     const targetX = LANES[currentLane];
     playerGroup.position.x += (targetX - playerGroup.position.x) * Math.min(1, dt * 15);
     const tiltZ = (playerGroup.position.x - targetX) * 0.18;
     playerGroup.rotation.z = tiltZ;
 
-    // Player Vertical Physics (Jetpack vs Jump/Gravity)
     if (powerups.jetpack > 0) {
       playerY += (5.8 - playerY) * Math.min(1, dt * 8);
       velY = 0;
       isJumping = false;
       isRolling = false;
       playerGroup.scale.y = 1;
-      runnerMesh.rotation.x = 0.55; // Superman flight pose
+      runnerMesh.rotation.x = 0.55;
     } else {
       runnerMesh.rotation.x = 0;
       if (isJumping) {
@@ -982,7 +937,6 @@
     }
     playerGroup.position.y = playerY;
 
-    // Roll Scale Animation
     if (isRolling) {
       rollTimer -= dt;
       playerGroup.scale.y += (0.52 - playerGroup.scale.y) * Math.min(1, dt * 18);
@@ -993,7 +947,6 @@
       playerGroup.scale.y += (1.0 - playerGroup.scale.y) * Math.min(1, dt * 16);
     }
 
-    // Running Bob & Hoverboard Tilt
     runCycle += dt * (activeSpeed * 0.65);
     if (powerups.hoverboard > 0) {
       runnerMesh.position.y = 0.16 + Math.sin(runCycle * 0.5) * 0.04;
@@ -1005,20 +958,17 @@
       runnerMesh.position.y = 0;
     }
 
-    // Spawn Waves
     spawnTimer -= dt;
     if (spawnTimer <= 0) {
       spawnWave();
       spawnTimer = Math.max(0.68, 25 / activeSpeed);
     }
 
-    // Player Hitbox
     const pHalfW = 0.42;
     const pHalfD = 0.42;
     const pMinY = playerY;
     const pMaxY = playerY + (isRolling ? 0.85 : 1.75);
 
-    // Update Obstacles & Check Collisions
     for (let i = activeObstacles.length - 1; i >= 0; i--) {
       const obs = activeObstacles[i];
       obs.mesh.position.z += (activeSpeed + obs.extraSpeed) * dt;
@@ -1029,21 +979,19 @@
         continue;
       }
 
-      // AABB Collision
       const dx = Math.abs(playerGroup.position.x - obs.mesh.position.x);
       const dz = Math.abs(playerGroup.position.z - obs.mesh.position.z);
       const yOverlap = pMinY < obs.maxY && pMaxY > obs.minY;
 
       if (dx < (pHalfW + obs.halfW) && dz < (pHalfD + obs.halfD) && yOverlap) {
         if (powerups.hoverboard > 0) {
-          // Hoverboard saves player and blasts obstacle away!
           powerups.hoverboard = 0;
           hoverboardMesh.visible = false;
           scene.remove(obs.mesh);
           activeObstacles.splice(i, 1);
           shakeTime = 0.35;
           sfx.crash();
-          showToast('💥 HOVERBOARD SAVED YOU!');
+          showToast('💥 CYBERGLIDER SAVED YOU!');
         } else {
           triggerGameOver();
           return;
@@ -1051,13 +999,11 @@
       }
     }
 
-    // Update Collectibles (Coins & Powerups)
     for (let i = activeCollectibles.length - 1; i >= 0; i--) {
       const col = activeCollectibles[i];
       col.mesh.position.z += activeSpeed * dt;
       if (col.spin) col.mesh.rotation.y += dt * 3.5;
 
-      // Coin Magnet attraction
       if (col.type === 'coin' && powerups.magnet > 0 && col.mesh.position.z > -28 && col.mesh.position.z < 4) {
         col.mesh.position.x += (playerGroup.position.x - col.mesh.position.x) * Math.min(1, dt * 10);
         col.mesh.position.y += ((playerY + 0.8) - col.mesh.position.y) * Math.min(1, dt * 10);
@@ -1079,8 +1025,7 @@
           powerups.jetpack = 10;
           jetpackMesh.visible = true;
           sfx.powerup();
-          showToast('🚀 JETPACK BOOST!');
-          // Spawn aerial coin trail!
+          showToast('🚀 FIREHAWK JETPACK BOOST!');
           for (let ac = 1; ac <= 14; ac++) {
             const airCoin = cloneAsset('coin', 0.95);
             airCoin.position.set(LANES[currentLane], 6.2, -ac * 3.2);
@@ -1101,7 +1046,7 @@
           const prizes = [
             () => { runCoins += 50; showToast('🎁 MYSTERY BOX: +50 COINS!'); },
             () => { powerups.multiplier2x = 15; showToast('🎁 MYSTERY BOX: 2X MULTIPLIER!'); },
-            () => { saveData.hoverboards += 2; persist(); showToast('🎁 MYSTERY BOX: +2 HOVERBOARDS!'); }
+            () => { saveData.hoverboards += 2; persist(); showToast('🎁 MYSTERY BOX: +2 CYBERGLIDERS!'); }
           ];
           prizes[Math.floor(Math.random() * prizes.length)]();
         }
@@ -1110,7 +1055,6 @@
       }
     }
 
-    // Smooth Camera Follow + Screen Shake
     let camX = playerGroup.position.x * 0.45;
     let camY = 5.0 + playerY * 0.55;
     if (shakeTime > 0) {
@@ -1126,14 +1070,12 @@
     renderer.render(scene, camera);
   }
 
-  // Handle Resize
   window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
 
-  // Boot Sequence
   loadAllModels().then(() => {
     buildEnvironment();
     setupPlayer();
